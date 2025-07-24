@@ -1,0 +1,10 @@
+terraform {
+  backend "s3" {
+    bucket = "mybucketname"
+    key = "terraform.tfstate"
+    # key = "path/to/mykey"
+    region = "us-east-1"
+
+
+  }
+}
