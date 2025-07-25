@@ -75,6 +75,25 @@ egress {
 }
 
 # nat
+#elastic ip
+resource "aws_eip" "lb" {
+  instance = aws_instance.name.id
+  domain   = "vpc"
+}
+#public nat
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.lb.id
+  subnet_id = aws_subnet.pub1.id
+  tags = {
+    Name = "natid"
+  }
+depends_on = [ aws_internet_gateway.name ]
+}
+#private nat
+resource "aws_nat_gateway" "name2" {
+  connectivity_type = "private"
+  subnet_id         = aws_subnet.pub1.id
+}
 # ec2 creation
 resource "aws_instance" "name" {
    ami           = "ami-05ffe3c48a9991133"
